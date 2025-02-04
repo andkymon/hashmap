@@ -96,4 +96,35 @@ export class HashMap {
 
     return false;
   }
+
+  remove(key) {
+    const index = this.hash(key);
+
+    if (index < 0 || index >= this.capacity) {
+      throw new Error("Trying to access index out of bounds");
+    }
+
+    if (typeof this.array[index] === "undefined") {
+      return false;
+    }
+
+    let searchPointer = this.array[index].headNode;
+
+    // Stop when searchPointer points to tail node
+    while (searchPointer.nextNode !== null) {
+        // Stop when head node matches thee key
+        if (key === searchPointer.value[0]) {
+            this.array[index].headNode = searchPointer.nextNode;
+            return true;
+        }
+        // Stop when searchPointer reaches node before target node
+        if (key === searchPointer.nextNode.value[0]) {
+          searchPointer.nextNode = searchPointer.nextNode.nextNode;
+          return true;
+        }
+        searchPointer = searchPointer.nextNode;
+      }
+  
+      return false;
+  }
 }

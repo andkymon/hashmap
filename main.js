@@ -19,3 +19,8 @@ console.log(test.get("Fail")); // null
 // has()
 console.log(test.has("Elven")); // true
 console.log(test.has("Fail")); // false
+
+// removee()
+console.log(test.remove("Elven")); // true
+console.log(test.remove("Fail")); // false
+console.log(test.array[8]); // Must show a linked list where the only node is "ELVEN"
