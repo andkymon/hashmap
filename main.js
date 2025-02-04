@@ -43,3 +43,6 @@ console.log(test.keys());
 
 // values()
 console.log(test.values());
+
+// entries()
+console.log(test.entries());

@@ -175,4 +175,24 @@ export class HashMap {
 
     return values;
   }
+
+  entries() {
+    const entries = [];
+
+    for (const bucket of this.array) {
+      if (typeof bucket === "undefined") {
+        continue;
+      }  
+
+      let searchPointer = bucket.headNode;
+      
+      // Stop when searchPointer points to null
+      while (searchPointer !== null) {
+        entries.push(searchPointer.value);
+        searchPointer = searchPointer.nextNode;
+      }
+    }
+
+    return entries;
+  }
 }
