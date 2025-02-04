@@ -17,6 +17,36 @@ export class HashMap {
 
         return hashCode;
     }
+
+
+    set(key, value) {
+        const index = this.hash(key);
+
+        if (index < 0 || index >= this.capacity) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        const nodeValue = [key, value]
+        
+        if (typeof this.array[index] === "undefined") {
+            this.array[index] = new LinkedList();
+            this.array[index].prepend(nodeValue);
+            return;
+        } 
+
+        let searchPointer = this.array[index].headNode;
+
+        // Stop when searchPointer points to null
+        while (searchPointer !== null) { 
+            if (key === searchPointer.value[0]) {
+                searchPointer.value[1] = value;
+                return;
+            }
+            searchPointer = searchPointer.nextNode;
+        }
+
+        this.array[index].append(nodeValue);
+    }
 }
 
 
