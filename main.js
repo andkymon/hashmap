@@ -28,3 +28,7 @@ console.log(test.array[8]); // Must show a linked list where the only node is "E
 // length()
 test.set("Kyle", 25);
 console.log(test.length()); // 2
+
+// clear()
+test.clear();
+console.log(test.length()); // 0

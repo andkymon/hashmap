@@ -130,4 +130,9 @@ export class HashMap {
   length() {
     return this.entryCount;
   }
+
+  clear() {
+    this.entryCount = 0;
+    this.array = new Array(this.capacity);
+  }
 }
