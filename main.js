@@ -32,3 +32,11 @@ console.log(test.length()); // 2
 // clear()
 test.clear();
 console.log(test.length()); // 0
+
+// keys()
+test.set("Elven", 24);
+test.set("ELVEN", 25);
+test.set('apple', 'red');
+test.set('banana', 'yellow');
+test.set('carrot', 'orange');
+console.log(test.keys());
