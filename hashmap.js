@@ -21,19 +21,22 @@ export class HashMap {
     return hashCode;
   }
 
-  set(key, value) {
-    const index = this.hash(key);
-
+  validateIndex(index) {
     if (index < 0 || index >= this.capacity) {
       throw new Error("Trying to access index out of bounds");
     }
+  }
+
+  set(key, value) {
+    const index = this.hash(key);
+    this.validateIndex();
 
     const nodeValue = [key, value];
 
     if (typeof this.array[index] === "undefined") {
       this.array[index] = new LinkedList();
       this.array[index].prepend(nodeValue);
-      this.entryCount++
+      this.entryCount++;
       return;
     }
 
@@ -54,10 +57,7 @@ export class HashMap {
 
   get(key) {
     const index = this.hash(key);
-
-    if (index < 0 || index >= this.capacity) {
-      throw new Error("Trying to access index out of bounds");
-    }
+    this.validateIndex();
 
     if (typeof this.array[index] === "undefined") {
       return null;
@@ -78,10 +78,7 @@ export class HashMap {
 
   has(key) {
     const index = this.hash(key);
-
-    if (index < 0 || index >= this.capacity) {
-      throw new Error("Trying to access index out of bounds");
-    }
+    this.validateIndex();
 
     if (typeof this.array[index] === "undefined") {
       return false;
@@ -102,10 +99,7 @@ export class HashMap {
 
   remove(key) {
     const index = this.hash(key);
-
-    if (index < 0 || index >= this.capacity) {
-      throw new Error("Trying to access index out of bounds");
-    }
+    this.validateIndex();
 
     if (typeof this.array[index] === "undefined") {
       return false;
@@ -115,22 +109,22 @@ export class HashMap {
 
     // Stop when searchPointer points to tail node
     while (searchPointer.nextNode !== null) {
-        // Stop when head node matches thee key
-        if (key === searchPointer.value[0]) {
-            this.array[index].headNode = searchPointer.nextNode;
-            this.entryCount--;
-            return true;
-        }
-        // Stop when searchPointer reaches node before target node
-        if (key === searchPointer.nextNode.value[0]) {
-          searchPointer.nextNode = searchPointer.nextNode.nextNode;
-          this.entryCount--;
-          return true;
-        }
-        searchPointer = searchPointer.nextNode;
+      // Stop when head node matches thee key
+      if (key === searchPointer.value[0]) {
+        this.array[index].headNode = searchPointer.nextNode;
+        this.entryCount--;
+        return true;
       }
-  
-      return false;
+      // Stop when searchPointer reaches node before target node
+      if (key === searchPointer.nextNode.value[0]) {
+        searchPointer.nextNode = searchPointer.nextNode.nextNode;
+        this.entryCount--;
+        return true;
+      }
+      searchPointer = searchPointer.nextNode;
+    }
+
+    return false;
   }
 
   length() {
