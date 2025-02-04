@@ -5,6 +5,7 @@ export class HashMap {
     this.capacity = capacity;
     this.loadFactor = loadFactor;
     this.array = new Array(this.capacity);
+    this.entryCount = 0;
   }
 
   hash(key) {
@@ -32,6 +33,7 @@ export class HashMap {
     if (typeof this.array[index] === "undefined") {
       this.array[index] = new LinkedList();
       this.array[index].prepend(nodeValue);
+      this.entryCount++
       return;
     }
 
@@ -47,6 +49,7 @@ export class HashMap {
     }
 
     this.array[index].append(nodeValue);
+    this.entryCount++;
   }
 
   get(key) {
@@ -115,16 +118,22 @@ export class HashMap {
         // Stop when head node matches thee key
         if (key === searchPointer.value[0]) {
             this.array[index].headNode = searchPointer.nextNode;
+            this.entryCount--;
             return true;
         }
         // Stop when searchPointer reaches node before target node
         if (key === searchPointer.nextNode.value[0]) {
           searchPointer.nextNode = searchPointer.nextNode.nextNode;
+          this.entryCount--;
           return true;
         }
         searchPointer = searchPointer.nextNode;
       }
   
       return false;
+  }
+
+  length() {
+    return this.entryCount;
   }
 }

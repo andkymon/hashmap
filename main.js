@@ -24,3 +24,7 @@ console.log(test.has("Fail")); // false
 console.log(test.remove("Elven")); // true
 console.log(test.remove("Fail")); // false
 console.log(test.array[8]); // Must show a linked list where the only node is "ELVEN"
+
+// length()
+test.set("Kyle", 25);
+console.log(test.length()); // 2
