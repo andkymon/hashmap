@@ -40,3 +40,6 @@ test.set('apple', 'red');
 test.set('banana', 'yellow');
 test.set('carrot', 'orange');
 console.log(test.keys());
+
+// values()
+console.log(test.values());
