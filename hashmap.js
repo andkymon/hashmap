@@ -18,7 +18,6 @@ export class HashMap {
         return hashCode;
     }
 
-
     set(key, value) {
         const index = this.hash(key);
 
@@ -46,6 +45,30 @@ export class HashMap {
         }
 
         this.array[index].append(nodeValue);
+    }
+
+    get(key) {
+        const index = this.hash(key);
+
+        if (index < 0 || index >= this.capacity) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        if (typeof this.array[index] === "undefined") {
+            return null;
+        } 
+
+        let searchPointer = this.array[index].headNode;
+
+        // Stop when searchPointer points to null
+        while (searchPointer !== null) { 
+            if (key === searchPointer.value[0]) {
+                return searchPointer.value[1];
+            }
+            searchPointer = searchPointer.nextNode;
+        }
+
+        return searchPointer;
     }
 }
 
