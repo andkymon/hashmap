@@ -2,7 +2,7 @@ import { LinkedList } from "./linked-list.js";
 
 export class HashMap {
   constructor(capacity, loadFactor) {
-    this.initialCapacity = capacity; 
+    this.initialCapacity = capacity;
     this.capacity = capacity;
     this.loadFactor = loadFactor;
     this.array = new Array(this.capacity);
@@ -59,32 +59,34 @@ export class HashMap {
   }
 
   checkLoadLevelExcess() {
-    if ((this.entryCount / this.capacity) > this.loadFactor) {
+    if (this.entryCount / this.capacity > this.loadFactor) {
       this.capacity = this.capacity * 2;
       this.rehashEntries();
-    } 
-    
-    return `Capacity: ${this.capacity}, Load Levels: ${this.entryCount / this.capacity}`;
+    }
+
+    return `Capacity: ${this.capacity}, Load Levels: ${
+      this.entryCount / this.capacity
+    }`;
   }
 
   rehashEntries() {
-      const oldArray = [...this.array];
-      this.array = new Array(this.capacity);
-      this.entryCount = 0;
+    const oldArray = [...this.array];
+    this.array = new Array(this.capacity);
+    this.entryCount = 0;
 
-      for (const bucket of oldArray) {
-        if (typeof bucket === "undefined") {
-          continue;
-        }
-
-        let searchPointer = bucket.headNode;
-      
-        // Stop when searchPointer points to null
-        while (searchPointer !== null) {
-          this.set(searchPointer.value[0], searchPointer.value[1]);
-          searchPointer = searchPointer.nextNode;
-        }
+    for (const bucket of oldArray) {
+      if (typeof bucket === "undefined") {
+        continue;
       }
+
+      let searchPointer = bucket.headNode;
+
+      // Stop when searchPointer points to null
+      while (searchPointer !== null) {
+        this.set(searchPointer.value[0], searchPointer.value[1]);
+        searchPointer = searchPointer.nextNode;
+      }
+    }
   }
 
   get(key) {
@@ -162,12 +164,14 @@ export class HashMap {
   }
 
   checkLoadLevelDeficit() {
-    if ((this.entryCount / (this.capacity / 2)) <= this.loadFactor) {
+    if (this.entryCount / (this.capacity / 2) <= this.loadFactor) {
       this.capacity = this.capacity / 2;
       this.rehashEntries();
-    } 
-    
-    return `Capacity: ${this.capacity}, Load Levels: ${this.entryCount / this.capacity}`;
+    }
+
+    return `Capacity: ${this.capacity}, Load Levels: ${
+      this.entryCount / this.capacity
+    }`;
   }
 
   length() {
@@ -185,10 +189,10 @@ export class HashMap {
     for (const bucket of this.array) {
       if (typeof bucket === "undefined") {
         continue;
-      }  
+      }
 
       let searchPointer = bucket.headNode;
-      
+
       // Stop when searchPointer points to null
       while (searchPointer !== null) {
         keys.push(searchPointer.value[0]);
@@ -205,10 +209,10 @@ export class HashMap {
     for (const bucket of this.array) {
       if (typeof bucket === "undefined") {
         continue;
-      }  
+      }
 
       let searchPointer = bucket.headNode;
-      
+
       // Stop when searchPointer points to null
       while (searchPointer !== null) {
         values.push(searchPointer.value[1]);
@@ -225,10 +229,10 @@ export class HashMap {
     for (const bucket of this.array) {
       if (typeof bucket === "undefined") {
         continue;
-      }  
+      }
 
       let searchPointer = bucket.headNode;
-      
+
       // Stop when searchPointer points to null
       while (searchPointer !== null) {
         entries.push(searchPointer.value);
