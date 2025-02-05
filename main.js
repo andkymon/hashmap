@@ -1,5 +1,8 @@
 import { HashMap } from "./hashmap.js";
+import { HashSet } from "./hashset.js";
 
+/*
+//HashMap Tests
 // set() and checkLoadLevels()
 const test = new HashMap(16, 0.75);
 console.log(test.checkLoadLevelExcess()); // Capacity: 16, Load Levels: 0
@@ -81,6 +84,88 @@ console.log(test.keys()); // Array of all keys [key1, key2]
 
 // values()
 console.log(test.values()); // Array of all values [value1, value2]
+
+// entries()
+console.log(test.entries()); // Array of all entries [[key1, value1], [key2, value2]]
+
+// clear()
+test.clear();
+console.log(test.length()); // 0
+console.log(test.entries()); // []
+*/
+
+//HashSet Tests
+// set() and checkLoadLevels()
+const test = new HashSet(16, 0.75);
+console.log(test.checkLoadLevelExcess()); // Capacity: 16, Load Levels: 0
+
+test.set('apple');
+test.set('banana');
+test.set('carrot');
+test.set('dog');
+test.set('elephant');
+test.set('frog');
+test.set('grape');
+test.set('hat');
+test.set('ice cream');
+test.set('jacket');
+test.set('kite');
+test.set('lion');
+console.log(test.checkLoadLevelExcess()); // Capacity: 16, Load Levels: 0.75
+
+test.set('apple'); // Should only change the value of 'apple' key
+console.log(test.entries());
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('moon'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.40625
+
+test.set('notebook');
+test.set('owl');
+test.set('pencil');
+test.set('quilt');
+test.set('rose');
+test.set('sunflower');
+test.set('table');
+test.set('umbrella');
+test.set('van');
+test.set('whale');
+test.set('xylophone'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.75
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('yarn'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 64, Load Levels: 0.390625
+
+// Should half capacity at this point as previous capacity can accommodate current load level
+test.remove('yarn'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.75
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('yarn'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 64, Load Levels: 0.390625
+
+// hash()
+console.log(test.hash("Eleven")); // 33
+console.log(test.hash("Elven")); // 56
+console.log(test.hash("ELVEN")); // 56
+console.log(test.hash("LEVEN")); // 38
+
+// has()
+console.log(test.has("whale")); // true
+console.log(test.has("fail")); // false
+
+// remove()
+console.log(test.remove("whale")); // true
+console.log(test.remove("fail")); // false
+console.log(test.entries()); // Must not include 'whale' key
+
+console.log(test.remove("owl")); // true
+console.log(test.array[4]); // Must not include 'whale' key
+
+// length()
+test.set("Kyle", 25);
+console.log(test.length()); // 24
 
 // entries()
 console.log(test.entries()); // Array of all entries [[key1, value1], [key2, value2]]
