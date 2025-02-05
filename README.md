@@ -1,4 +1,4 @@
-# hashmaps
+# hashmap
 
 ## Description
 
