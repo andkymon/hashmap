@@ -2,6 +2,7 @@ import { LinkedList } from "./linked-list.js";
 
 export class HashMap {
   constructor(capacity, loadFactor) {
+    this.initialCapacity = capacity; 
     this.capacity = capacity;
     this.loadFactor = loadFactor;
     this.array = new Array(this.capacity);
@@ -37,6 +38,7 @@ export class HashMap {
       this.array[index] = new LinkedList();
       this.array[index].prepend(nodeValue);
       this.entryCount++;
+      this.checkLoadLevels();
       return;
     }
 
@@ -53,6 +55,36 @@ export class HashMap {
 
     this.array[index].append(nodeValue);
     this.entryCount++;
+    this.checkLoadLevels();
+  }
+
+  checkLoadLevels() {
+    if ((this.entryCount / this.capacity) > this.loadFactor) {
+      this.capacity = this.capacity * 2;
+      this.rehashEntries();
+    } 
+    
+    return `Capacity: ${this.capacity}, Load Levels: ${this.entryCount / this.capacity}`;
+  }
+
+  rehashEntries() {
+      const oldArray = [...this.array];
+      this.array = new Array(this.capacity);
+      this.entryCount = 0;
+
+      for (const bucket of oldArray) {
+        if (typeof bucket === "undefined") {
+          continue;
+        }
+
+        let searchPointer = bucket.headNode;
+      
+        // Stop when searchPointer points to null
+        while (searchPointer !== null) {
+          this.set(searchPointer.value[0], searchPointer.value[1]);
+          searchPointer = searchPointer.nextNode;
+        }
+      }
   }
 
   get(key) {
@@ -107,9 +139,9 @@ export class HashMap {
 
     let searchPointer = this.array[index].headNode;
 
-    // Stop when searchPointer points to tail node
-    while (searchPointer.nextNode !== null) {
-      // Stop when head node matches thee key
+    // Stop when searchPointer points to null
+    while (searchPointer !== null) {
+      // Stop when head node matches the key
       if (key === searchPointer.value[0]) {
         this.array[index].headNode = searchPointer.nextNode;
         this.entryCount--;

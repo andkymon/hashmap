@@ -1,48 +1,83 @@
 import { HashMap } from "./hashmap.js";
 
-const test = new HashMap(16, 1);
+// set() and checkLoadLevels()
+const test = new HashMap(16, 0.75);
+console.log(test.checkLoadLevels()); // Capacity: 16, Load Levels: 0
+
+test.set('apple', 'red');
+test.set('banana', 'yellow');
+test.set('carrot', 'orange');
+test.set('dog', 'brown');
+test.set('elephant', 'gray');
+test.set('frog', 'green');
+test.set('grape', 'purple');
+test.set('hat', 'black');
+test.set('ice cream', 'white');
+test.set('jacket', 'blue');
+test.set('kite', 'pink');
+test.set('lion', 'golden');
+console.log(test.checkLoadLevels()); // Capacity: 16, Load Levels: 0.75
+
+test.set('apple', 'red'); // Should only change the value of 'apple' key
+console.log(test.entries());
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('moon', 'silver'); 
+console.log(test.checkLoadLevels()); // Capacity: 32, Load Levels: 0.40625
+
+test.set('notebook', 'cyan');
+test.set('owl', 'beige');
+test.set('pencil', 'maroon');
+test.set('quilt', 'magenta');
+test.set('rose', 'crimson');
+test.set('sunflower', 'yellow');
+test.set('table', 'teal');
+test.set('umbrella', 'violet');
+test.set('van', 'navy');
+test.set('whale', 'indigo');
+test.set('xylophone', 'chartreuse'); 
+console.log(test.checkLoadLevels()); // Capacity: 32, Load Levels: 0.75
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('yarn', 'peach'); 
+console.log(test.checkLoadLevels()); // Capacity: 64, Load Levels: 0.390625
 
 // hash()
-console.log(test.hash("Eleven")); // 1
-console.log(test.hash("Elven")); // 8
-console.log(test.hash("ELVEN")); // 8
-
-// set()
-test.set("Elven", 24);
-test.set("ELVEN", 25);
-console.log(test.array[8]); // Must show a linked list where the "Elven" node points to the "ELVEN" node
+console.log(test.hash("Eleven")); // 33
+console.log(test.hash("Elven")); // 56
+console.log(test.hash("ELVEN")); // 56
+console.log(test.hash("LEVEN")); // 38
 
 // get()
-console.log(test.get("Elven")); // 24
-console.log(test.get("Fail")); // null
+console.log(test.get("whale")); // indigo
+console.log(test.get("fail")); // null
 
 // has()
-console.log(test.has("Elven")); // true
-console.log(test.has("Fail")); // false
+console.log(test.has("whale")); // true
+console.log(test.has("fail")); // false
 
-// removee()
-console.log(test.remove("Elven")); // true
-console.log(test.remove("Fail")); // false
-console.log(test.array[8]); // Must show a linked list where the only node is "ELVEN"
+// remove()
+console.log(test.remove("whale")); // true
+console.log(test.remove("fail")); // false
+console.log(test.entries()); // Must not include 'whale' key
+
+console.log(test.remove("owl")); // true
+console.log(test.array[4]); // Must not include 'whale' key
 
 // length()
 test.set("Kyle", 25);
-console.log(test.length()); // 2
+console.log(test.length()); // 24
+
+// keys()
+console.log(test.keys()); // Array of all keys [key1, key2]
+
+// values()
+console.log(test.values()); // Array of all values [value1, value2]
+
+// entries()
+console.log(test.entries()); // Array of all entries [[key1, value1], [key2, value2]]
 
 // clear()
 test.clear();
 console.log(test.length()); // 0
-
-// keys()
-test.set("Elven", 24);
-test.set("ELVEN", 25);
-test.set('apple', 'red');
-test.set('banana', 'yellow');
-test.set('carrot', 'orange');
-console.log(test.keys());
-
-// values()
-console.log(test.values());
-
-// entries()
-console.log(test.entries());
+console.log(test.entries()); // []
