@@ -38,7 +38,7 @@ export class HashMap {
       this.array[index] = new LinkedList();
       this.array[index].prepend(nodeValue);
       this.entryCount++;
-      this.checkLoadLevels();
+      this.checkLoadLevelExcess();
       return;
     }
 
@@ -55,10 +55,10 @@ export class HashMap {
 
     this.array[index].append(nodeValue);
     this.entryCount++;
-    this.checkLoadLevels();
+    this.checkLoadLevelExcess();
   }
 
-  checkLoadLevels() {
+  checkLoadLevelExcess() {
     if ((this.entryCount / this.capacity) > this.loadFactor) {
       this.capacity = this.capacity * 2;
       this.rehashEntries();
@@ -145,18 +145,29 @@ export class HashMap {
       if (key === searchPointer.value[0]) {
         this.array[index].headNode = searchPointer.nextNode;
         this.entryCount--;
+        this.checkLoadLevelDeficit();
         return true;
       }
       // Stop when searchPointer reaches node before target node
       if (key === searchPointer.nextNode.value[0]) {
         searchPointer.nextNode = searchPointer.nextNode.nextNode;
         this.entryCount--;
+        this.checkLoadLevelDeficit();
         return true;
       }
       searchPointer = searchPointer.nextNode;
     }
 
     return false;
+  }
+
+  checkLoadLevelDeficit() {
+    if ((this.entryCount / (this.capacity / 2)) <= this.loadFactor) {
+      this.capacity = this.capacity / 2;
+      this.rehashEntries();
+    } 
+    
+    return `Capacity: ${this.capacity}, Load Levels: ${this.entryCount / this.capacity}`;
   }
 
   length() {

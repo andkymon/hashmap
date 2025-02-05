@@ -2,7 +2,7 @@ import { HashMap } from "./hashmap.js";
 
 // set() and checkLoadLevels()
 const test = new HashMap(16, 0.75);
-console.log(test.checkLoadLevels()); // Capacity: 16, Load Levels: 0
+console.log(test.checkLoadLevelExcess()); // Capacity: 16, Load Levels: 0
 
 test.set('apple', 'red');
 test.set('banana', 'yellow');
@@ -16,14 +16,14 @@ test.set('ice cream', 'white');
 test.set('jacket', 'blue');
 test.set('kite', 'pink');
 test.set('lion', 'golden');
-console.log(test.checkLoadLevels()); // Capacity: 16, Load Levels: 0.75
+console.log(test.checkLoadLevelExcess()); // Capacity: 16, Load Levels: 0.75
 
 test.set('apple', 'red'); // Should only change the value of 'apple' key
 console.log(test.entries());
 
 // Should double capacity at this point as load levels exceed load factor
 test.set('moon', 'silver'); 
-console.log(test.checkLoadLevels()); // Capacity: 32, Load Levels: 0.40625
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.40625
 
 test.set('notebook', 'cyan');
 test.set('owl', 'beige');
@@ -36,11 +36,19 @@ test.set('umbrella', 'violet');
 test.set('van', 'navy');
 test.set('whale', 'indigo');
 test.set('xylophone', 'chartreuse'); 
-console.log(test.checkLoadLevels()); // Capacity: 32, Load Levels: 0.75
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.75
 
 // Should double capacity at this point as load levels exceed load factor
 test.set('yarn', 'peach'); 
-console.log(test.checkLoadLevels()); // Capacity: 64, Load Levels: 0.390625
+console.log(test.checkLoadLevelExcess()); // Capacity: 64, Load Levels: 0.390625
+
+// Should half capacity at this point as previous capacity can accomodate current load level
+test.remove('yarn'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 32, Load Levels: 0.75
+
+// Should double capacity at this point as load levels exceed load factor
+test.set('yarn', 'peach'); 
+console.log(test.checkLoadLevelExcess()); // Capacity: 64, Load Levels: 0.390625
 
 // hash()
 console.log(test.hash("Eleven")); // 33
