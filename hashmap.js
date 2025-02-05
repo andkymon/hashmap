@@ -180,6 +180,7 @@ export class HashMap {
 
   clear() {
     this.entryCount = 0;
+    this.capacity = this.initialCapacity;
     this.array = new Array(this.capacity);
   }
 
